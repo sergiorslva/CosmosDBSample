@@ -27,11 +27,6 @@ namespace AzureCosmosDotNet.Models
 
         [JsonProperty("type")]
         public string Type { get; private set; } = "customer";
-
-        public void IncrementOrderCount()
-        {
-            this.OrderCount++;
-        }
     }
 
     public class CustomerAddress

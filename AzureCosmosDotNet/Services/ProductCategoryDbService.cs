@@ -19,7 +19,7 @@ namespace AzureCosmosDotNet.Services
         public async Task<ItemResponse<ProductCategoryModel>> DeleteItemAsync(string id)
         {
             var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);
-            return await container.Container.DeleteItemAsync<ProductCategoryModel>(id, partitionKey: new PartitionKey("category"));
+            return await container.DeleteItemAsync<ProductCategoryModel>(id, partitionKey: new PartitionKey("category"));
         }
 
         public async Task<IEnumerable<ProductCategoryModel>> GetItemSAsync()
@@ -32,7 +32,7 @@ namespace AzureCosmosDotNet.Services
                  query: "SELECT * FROM c WHERE c.type = @type")                
                 .WithParameter("@type", "category");
 
-            var customersFeed = container.Container.GetItemQueryIterator<ProductCategoryModel>
+            var customersFeed = container.GetItemQueryIterator<ProductCategoryModel>
                 (
                     queryDefinition: query
                 );
@@ -52,13 +52,13 @@ namespace AzureCosmosDotNet.Services
         public async Task<ItemResponse<ProductCategoryModel>> GetItemAsync(string id)
         {
             var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);
-            return await container.Container.ReadItemAsync<ProductCategoryModel>(id, partitionKey: new PartitionKey("category"));
+            return await container.ReadItemAsync<ProductCategoryModel>(id, partitionKey: new PartitionKey("category"));
         }
 
         public async Task<ItemResponse<ProductCategoryModel>> UpsertItemAsync(ProductCategoryModel category)
         {
             var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);
-            return await container.Container.UpsertItemAsync<ProductCategoryModel>
+            return await container.UpsertItemAsync<ProductCategoryModel>
                 (
                     category, 
                     new PartitionKey("category")

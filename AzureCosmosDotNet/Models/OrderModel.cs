@@ -10,6 +10,9 @@ namespace AzureCosmosDotNet.Models
         [JsonProperty("customerId")]
         public string CustomerId { get; set; }
 
+        [JsonProperty("customerName")]
+        public string CustomerName { get; }
+
         [JsonProperty("type")]
         public string Type { get; private set; } = "order";
 

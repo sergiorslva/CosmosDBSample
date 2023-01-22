@@ -9,7 +9,7 @@ namespace AzureCosmosDotNet.Services
         private string primaryKey = String.Empty;
 
         private CosmosClient? cosmosClient;
-        private Database? database;
+        private Database? database = null;
         private string databaseId = "az204Database";        
 
         public CosmoDbService(IConfiguration configuration)
@@ -21,14 +21,14 @@ namespace AzureCosmosDotNet.Services
         private async Task Connect()
         {            
             this.cosmosClient = new CosmosClient(endpointUri, primaryKey);
-            this.database = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);                         
+            this.database = await this.cosmosClient.CreateDatabaseIfNotExistsAsync(databaseId);                        
         }
 
-        public async Task<ContainerResponse> CreateContainerAsync(string container, string partitionKey)
-        {
+        public async Task<Container> CreateContainerAsync(string container, string partitionKey)
+        {            
             await this.Connect();
             if(this.database != null)
-            {
+            {                
                 return await this.database.CreateContainerIfNotExistsAsync(container, partitionKey);
             }
 

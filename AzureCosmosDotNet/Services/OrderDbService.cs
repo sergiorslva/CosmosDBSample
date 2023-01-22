@@ -18,13 +18,8 @@ namespace AzureCosmosDotNet.Services
 
         public async Task<ItemResponse<OrderModel>> CreateOrderAsync(OrderModel order)
         {
-            var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);
-
-            var customer = await container.Container.ReadItemAsync<CustomerModel>(order.CustomerId, new PartitionKey(order.CustomerId));
-            customer.Resource.IncrementOrderCount();
-            await container.Container.UpsertItemAsync<CustomerModel>(customer, new PartitionKey(order.CustomerId));
-
-            return await container.Container.CreateItemAsync<OrderModel>(order, new PartitionKey(order.CustomerId));
+            var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);                                    
+            return await container.CreateItemAsync<OrderModel>(order, new PartitionKey(order.CustomerId));
         }
 
         public Task<ItemResponse<OrderModel>> GetItemAsync(string id)

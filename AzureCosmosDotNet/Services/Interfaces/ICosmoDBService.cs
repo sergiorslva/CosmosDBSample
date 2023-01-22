@@ -4,6 +4,6 @@ namespace AzureCosmosDotNet.Services.Interfaces
 {
     public interface ICosmoDBService
     {
-        Task<ContainerResponse> CreateContainerAsync(string container, string partitionKey);        
+        Task<Container> CreateContainerAsync(string container, string partitionKey);        
     }
 }

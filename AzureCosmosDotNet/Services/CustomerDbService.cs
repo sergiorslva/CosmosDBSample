@@ -27,7 +27,7 @@ namespace AzureCosmosDotNet.Services
                 .WithParameter("@id", partitionKey)
                 .WithParameter("@type", "customer");
 
-            var customersFeed = container.Container.GetItemQueryIterator<CustomerModel>
+            var customersFeed = container.GetItemQueryIterator<CustomerModel>
                 (                    
                     queryDefinition: query
                 );
@@ -47,19 +47,19 @@ namespace AzureCosmosDotNet.Services
         public async Task<ItemResponse<CustomerModel>> GetItemAsync(string id)
         {            
             var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);
-            return await container.Container.ReadItemAsync<CustomerModel>(id, partitionKey: new PartitionKey(id));            
+            return await container.ReadItemAsync<CustomerModel>(id, partitionKey: new PartitionKey(id));            
         }
 
         public async Task<ItemResponse<CustomerModel>> DeleteItemAsync(string id)
         {
             var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);
-            return await container.Container.DeleteItemAsync<CustomerModel>(id, partitionKey: new PartitionKey(id));
+            return await container.DeleteItemAsync<CustomerModel>(id, partitionKey: new PartitionKey(id));
         }
 
         public async Task<ItemResponse<CustomerModel>> UpsertItemAsync(CustomerModel customer)
         {
             var container = await cosmoDBService.CreateContainerAsync(containerName, partitionKey);
-            return await container.Container.UpsertItemAsync<CustomerModel>(customer, new PartitionKey(customer.Id));
+            return await container.UpsertItemAsync<CustomerModel>(customer, new PartitionKey(customer.Id));
         }
     }
 }
